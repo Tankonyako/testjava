@@ -1,5 +1,7 @@
 package org.example.Core.Models;
 
+import org.example.Core.Utils.ToMap;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.InvocationTargetException;
@@ -7,7 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public interface SerializeModel
+public interface SerializeModel extends ToMap<String, Object>
 {
 	public int hashCode();
 

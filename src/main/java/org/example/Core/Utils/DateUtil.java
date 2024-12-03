@@ -14,4 +14,11 @@ public class DateUtil
 
 		return formatter.parse(date);
 	}
+
+	public static String format(Date date, String format)
+	{
+		var formatter = new java.text.SimpleDateFormat(format, Locale.ENGLISH);
+
+		return formatter.format(date);
+	}
 }
