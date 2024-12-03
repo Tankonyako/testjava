@@ -7,7 +7,6 @@ import org.example.Core.Utils.DateUtil;
 import org.example.Core.Utils.JsonUtil;
 import org.example.Core.Utils.ToMap;
 import org.example.Models.Call;
-import org.example.Models.Ticker;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -68,14 +67,12 @@ public record CallResource(Call... resource) implements Resource, Resource.Jsona
 			return call.protection();
 		}
 
-		public List<String> getTickers()
+		public List<Map<String, String>> getTickers()
 		{
-			return call.tickers().stream().map(Ticker::name).toList();
-		}
-
-		public String getStrikeDate()
-		{
-			return DateUtil.format(call.strikeDate(), DateUtil.ENGLISH_FORMAT);
+			return call.tickers().stream().map(ticker -> Map.of(
+					"name", ticker.name(),
+					"strikeDate", DateUtil.format(ticker.strikeDate(), DateUtil.ENGLISH_FORMAT)
+			)).toList();
 		}
 
 		@JsonIgnore
@@ -85,7 +82,6 @@ public record CallResource(Call... resource) implements Resource, Resource.Jsona
 			map.put("name", getName());
 			map.put("protection", getProtection());
 			map.put("tickers", getTickers());
-			map.put("strikeDate", getStrikeDate());
 
 			return map;
 		}

@@ -27,7 +27,7 @@ public class DatabaseTest
 	@Test
 	public void TestSerialize()
 	{
-		var firstTicker = new Ticker(0, "AAPL_UQ", "Apple inc.");
+		var firstTicker = new Ticker(0, "AAPL_UQ", "Apple inc.", null);
 
 		assertFalse(firstTicker.toMap().isEmpty());
 		assertEquals("AAPL_UQ", firstTicker.toMap().get("name"));
@@ -37,7 +37,7 @@ public class DatabaseTest
 	@Test
 	public void TestCrud()
 	{
-		var firstTicker = new Ticker(0, "AAPL_UQ", "Apple inc.");
+		var firstTicker = new Ticker(0, "AAPL_UQ", "Apple inc.", null);
 		repo.insert(firstTicker);
 
 		assertEquals(repo.list().size(), 1);
@@ -56,15 +56,15 @@ public class DatabaseTest
 	@Test
 	public void TestCrudRelations() throws ParseException
 	{
-		var firstTicker = new Ticker(0, "AAPL_UQ", "Apple inc.");
+		var firstTicker = new Ticker(0, "AAPL_UQ", "Apple inc.", DateUtil.parse("09-07-2024", DateUtil.ENGLISH_FORMAT));
 		repo.insert(firstTicker);
-		var firstCall = new Call(10, "Autocall", 0.4, List.of(firstTicker), DateUtil.parse("09-07-2024", DateUtil.ENGLISH_FORMAT));
+		var firstCall = new Call(10, "Autocall", 0.4, List.of(firstTicker));
 		repo2.insert(firstCall);
 
 		assertEquals(1, repo2.list().size());
 
 		assertEquals(1, repo2.where("id", 10L).size());
-		assertEquals(1, repo2.where("strikeDate", DateUtil.parse("09-07-2024", DateUtil.ENGLISH_FORMAT)).size());
+		assertEquals(1, repo.where("strikeDate", DateUtil.parse("09-07-2024", DateUtil.ENGLISH_FORMAT)).size());
 
 		assertEquals(1, firstCall.tickers().size());
 
