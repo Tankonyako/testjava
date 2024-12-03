@@ -6,6 +6,12 @@ This is concept of my custom designed framework for test project of **Vizibility
 
 I chose this idea because it shows small solutions to problems, such as universal serialization of models*.
 
+#### 📋 Table generator
+
+Can convert list of maps to HTML table, example:
+
+<img src="./images/table-example.png" width="300px"/>
+
 ### 🔧 Requirement
 
 - Any java with **JRE 20** support

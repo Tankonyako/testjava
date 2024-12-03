@@ -19,6 +19,7 @@ public class Application
 		Database.seed();
 
 		var controller = new CallController();
-		System.out.println(output(Request.ContentType.JSON, controller, "All"));
+//		System.out.println(output(Request.ContentType.JSON, controller, "All"));
+		System.out.println(output(Request.ContentType.HTML, controller, "All"));
 	}
 }
