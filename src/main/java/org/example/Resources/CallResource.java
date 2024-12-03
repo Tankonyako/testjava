@@ -2,12 +2,16 @@ package org.example.Resources;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.example.Core.Http.HtmlRenderer.HTMLTable;
+import org.example.Core.Utils.DateUtil;
 import org.example.Core.Utils.JsonUtil;
+import org.example.Core.Utils.ToMap;
 import org.example.Models.Call;
 import org.example.Models.Ticker;
 
-import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public record CallResource(Call resource) implements Resource, Resource.Jsonable, Resource.Template
 {
@@ -20,11 +24,11 @@ public record CallResource(Call resource) implements Resource, Resource.Jsonable
 	@Override
 	public String toTemplate()
 	{
-		return null;
+		return new HTMLTable(new Json(resource)).render();
 	}
 
 	// Using for converting only specified attrs
-	public static class Json
+	public static class Json implements ToMap<String, Object>
 	{
 		@JsonIgnore
 		private Call call;
@@ -55,9 +59,21 @@ public record CallResource(Call resource) implements Resource, Resource.Jsonable
 			return call.tickers().stream().map(Ticker::name).toList();
 		}
 
-		public Date getStrikeDate()
+		public String getStrikeDate()
 		{
-			return call.strikeDate();
+			return DateUtil.format(call.strikeDate(), DateUtil.ENGLISH_FORMAT);
+		}
+
+		@JsonIgnore
+		public Map<String, Object> toMap()
+		{
+			var map = new LinkedHashMap<String, Object>();
+			map.put("name", getName());
+			map.put("protection", getProtection());
+			map.put("tickers", getTickers());
+			map.put("strikeDate", getStrikeDate());
+
+			return map;
 		}
 	}
 }
