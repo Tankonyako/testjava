@@ -21,7 +21,7 @@ public class CallsRepository extends BaseRepository<Call> implements Seedable
 							0,
 							"Autocall",
 							0.7,
-							Database.Repositories.Tickers.where("name", "AAPL_UQ").stream().toList(),
+							Database.Repositories.Tickers.where("name", "AAPL_UQ", "TSLQ_US").stream().toList(),
 							DateUtil.parse("09-07-2024", DateUtil.ENGLISH_FORMAT)
 					)
 			);
@@ -31,11 +31,5 @@ public class CallsRepository extends BaseRepository<Call> implements Seedable
 		{
 			throw new RuntimeException(e);
 		}
-
-//
-//			new Call("Autocall", 0.8, "AAPL_UQ, TSLQ_US", "09-07-2024"),
-//			new Call("Autocall", 0.8, "AAPL_UQ, TSLQ_US", "09-07-2024"),
-//			new Call("Autocall", 0.8, "AAPL_UQ, TSLQ_US", "09-07-2024"),
-//			new Call("Autocall", 0.8, "AAPL_UQ, TSLQ_US", "09-07-2024")
 	}
 }

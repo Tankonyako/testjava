@@ -1,6 +1,6 @@
 package org.example.Resources;
 
-public interface IResource<T>
+public interface Resource
 {
 	public interface Jsonable
 	{

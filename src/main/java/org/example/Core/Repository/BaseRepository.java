@@ -34,10 +34,10 @@ public class BaseRepository<T extends Model> implements Repository, Repository.C
 	}
 
 	@Override
-	public Collection<T> where(String name, Object value)
+	public Collection<T> where(String name, Object... values)
 	{
 		return data.stream()
-				.filter(model -> Objects.equals(model.toMap().getOrDefault(name, null), value))
+				.filter(model -> Arrays.stream(values).anyMatch(value -> Objects.equals(model.toMap().getOrDefault(name, null), value)))
 				.toList();
 	}
 
@@ -52,7 +52,7 @@ public class BaseRepository<T extends Model> implements Repository, Repository.C
 	{
 		var output = new ArrayList<T>(data);
 		output.add(value);
-		
+
 		data = output.stream().toList();
 	}
 }

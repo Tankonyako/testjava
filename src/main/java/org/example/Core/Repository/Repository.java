@@ -13,7 +13,7 @@ public interface Repository
 
 		public Optional<T> find(long id);
 
-		public Collection<T> where(String name, Object value);
+		public Collection<T> where(String name, Object... values);
 
 		public Collection<T> list();
 
