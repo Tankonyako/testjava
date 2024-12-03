@@ -2,7 +2,6 @@ package org.example.Resources;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.example.Core.Http.HtmlRenderer.HTMLTable;
 import org.example.Core.Utils.DateUtil;
 import org.example.Core.Utils.JsonUtil;
 import org.example.Core.Utils.ToMap;
@@ -13,18 +12,25 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public record CallResource(Call resource) implements Resource, Resource.Jsonable, Resource.Template
+public record CallResource(Call... resource) implements Resource, Resource.Jsonable, Resource.Template
 {
 	@Override
 	public String toJson()
 	{
-		return JsonUtil.newBuilder().convertValue(new Json(resource), JsonNode.class).toPrettyString();
+		var node = JsonUtil.newBuilder().createArrayNode();
+
+		for (var call : resource)
+		{
+			node.add(JsonUtil.newBuilder().convertValue(new Json(call), JsonNode.class));
+		}
+
+		return node.toPrettyString();
 	}
 
 	@Override
 	public String toTemplate()
 	{
-		return new HTMLTable(new Json(resource)).render();
+		return "";
 	}
 
 	// Using for converting only specified attrs

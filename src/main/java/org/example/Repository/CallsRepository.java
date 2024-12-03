@@ -23,6 +23,13 @@ public class CallsRepository extends BaseRepository<Call> implements Seedable
 							0.7,
 							Database.Repositories.Tickers.where("name", "AAPL_UQ", "TSLQ_US").stream().toList(),
 							DateUtil.parse("09-07-2024", DateUtil.ENGLISH_FORMAT)
+					),
+					new Call(
+							0,
+							"Autocall",
+							0.2,
+							Database.Repositories.Tickers.where("name", "AMZN_US").stream().toList(),
+							DateUtil.parse("12-08-2024", DateUtil.ENGLISH_FORMAT)
 					)
 			);
 		}
